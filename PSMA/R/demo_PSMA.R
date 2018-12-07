@@ -2,7 +2,7 @@
 library(httr)
 library(rjson)   # for fromJSON(...)
 
-key <- "brAKupqRdkXNpkYRhy6SpPe1ErVJiAEc"
+key <- "YOUR-KEY"
 
 full_api_url <- "https://api.psma.com.au/beta/v1/addresses?addressString=1%20bowes%20st%20phillip%20act%202606&stateTerritory=ALL&datum=GDA94&page=1&perPage=10"
 getdata<-GET(url=full_api_url, add_headers(Authorization=key))
