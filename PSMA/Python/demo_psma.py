@@ -5,7 +5,7 @@ full_api_header = """
 headers = {
 'Content Type': 'application/json', 
 
-'Authorization': 'brAKupqRdkXNpkYRhy6SpPe1ErVJiAEc'
+'Authorization': 'YOUR-KEY'
 }
 """
 print('url: {}:'.format(full_api_url))
