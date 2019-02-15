@@ -143,9 +143,9 @@ print('2d array: matrix to pandas dataframe: value_panda')
 value_panda = pd.DataFrame(matrix)
 value_panda.columns = ['sa2_maincode','sa2_name','males',
                      'females','total_pop']
-print(value_panda.as_matrix())
+print(value_panda.values)
 
-conn = sqlite3.connect('test.db')
+conn = sqlite3.connect('test/test.db')
 c = conn.cursor()
 # Create the table of pop_sa2
 #c.execute("""DROP TABLE pop_sa2""")
@@ -159,10 +159,12 @@ c.execute("""CREATE TABLE IF NOT EXISTS pop_sa2 (
 conn.commit()
 
 test = conn.execute('SELECT * from pop_sa2')
-names = [description[0] for description in test.description]
-print(names)
+names = [description[0] for description in  test.description]
+#print(names)
 
 value_panda.to_sql('pop_sa2', conn, if_exists='append', index=False)
 
 conn.execute('SELECT * from pop_sa2').fetchall()
-#>> [('SL', '8/31/2017', 81.9), ('SL', '8/31/2017', 81.9)]
+
+value_panda.to_csv('dataset.csv', sep=',')
+
