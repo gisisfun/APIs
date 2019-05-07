@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Using the XMLHttpRequest object</h2>
+<FORM Name="theForm">
+fname: <INPUT Type=Text Name="fname">
+<INPUT Type=Button Value="Action"  onClick='loadXMLDoc(theForm.fname.value)'>
+
+<p id="demo1"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<script>
+function loadXMLDoc(fname) {
+var testvar = fname;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo1").innerHTML = this.responseText;
+      var obj = JSON.parse(this.responseText); 
+      document.getElementById("demo2").innerHTML = obj.header.id
+      document.getElementById("demo3").innerHTML = testvar;
+    }
+  };
+  xhttp.open("GET", "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/3.A04+TT+0.1.SA2.319041518/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016", true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
+
+
