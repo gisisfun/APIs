@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<style>
+  h1 {font-family:arial, sanserif;}
+  h2 {font-family:arial, sanserif;}
+  body {font-family:arial, sanserif;}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse:collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+  }
+</style>
+<body>
+
+<h2>ABS SDMX-JSON Query</h2>
+<FORM Name="theForm">
+SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
+<INPUT Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
+<table>
+  <tr><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Population</th></tr>
+  <tr><td id="demo1"></td><td id="demo2"></td><td id="demo3"></td></tr>
+</table>
+<p id="demo0"></p>
+
+<script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+function loadDoc(fname) {
+  document.getElementById("demo0").innerHTML = "Unknown Region Code";
+  document.getElementById("demo1").innerHTML = "";
+  document.getElementById("demo2").innerHTML = "";
+  document.getElementById("demo3").innerHTML = "";
+  var testvar = fname.trim();
+  url = "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/1+3+2.TT.1.SA2."+testvar+"/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016"
+  var settings = { 
+    "async": true, 
+    "crossDomain": true,
+    "url": url, 
+    "method": "GET", 
+    "headers": { 
+  } 
+  } 
+  $.ajax(settings).done(function (response) { 
+  console.log(response); 
+  textResponse= JSON.stringify(response);
+  return textResponse;
+  }); 
+  var newjsontext = textResponse.replace("0:0:0:0:0:0", "fred1").replace( "1:0:0:0:0:0", "fred2").replace( "2:0:0:0:0:0", "fred3");
+  var obj = JSON.parse(newjsontext); 
+  if (newjsontext.length > 0) {
+    document.getElementById("demo0").innerHTML = "";
+    document.getElementById("demo1").innerHTML = testvar;
+    document.getElementById("demo2").innerHTML = obj.structure.dimensions.observation[4].values[0].name;
+    document.getElementById("demo3").innerHTML = obj.dataSets[0].observations.fred1[0];
+  }
+}
+</script>
+</body>
+</html>
