@@ -27,7 +27,6 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 
 <script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-
   function errormsg() {
       document.getElementById("demo0").innerHTML = "Unknown Region Code";
   document.getElementById("demo1").innerHTML = "";
@@ -35,6 +34,18 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
   document.getElementById("demo3").innerHTML = "";  
   }
   
+function displaydata(jsontext,testvar)
+ {
+let textjson = jsontext
+var newjsontext = jsontext.replace("0:0:0:0:0:0", "fred1").replace( "1:0:0:0:0:0", "fred2").replace( "2:0:0:0:0:0", "fred3");
+  var obj = JSON.parse(newjsontext); 
+  
+    document.getElementById("demo0").innerHTML = "";
+    document.getElementById("demo1").innerHTML = testvar;
+    document.getElementById("demo2").innerHTML = obj.structure.dimensions.observation[4].values[0].name;
+    document.getElementById("demo3").innerHTML = obj.dataSets[0].observations.fred1[0];
+}
+
   function loadDoc(fname) {
   var obj=""
   var testvar = fname.trim();
@@ -45,26 +56,22 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
     "url": url, 
     "method": "GET", 
     "headers": { 
+     } 
   } 
-  } 
+
+
   $.ajax(settings).done(function (response) { 
   console.log(response); 
-  textResponse= JSON.stringify(response);
+  var textResponse= JSON.stringify(response);
+  displaydata(textResponse,testvar);
   return textResponse;
   }); 
-  
+
   $.ajax(settings).error(function () {
   errormsg();
   });
   
-  var newjsontext = textResponse.replace("0:0:0:0:0:0", "fred1").replace( "1:0:0:0:0:0", "fred2").replace( "2:0:0:0:0:0", "fred3");
-  var obj = JSON.parse(newjsontext); 
-  if (newjsontext.length > 0) {
-    document.getElementById("demo0").innerHTML = "";
-    document.getElementById("demo1").innerHTML = testvar;
-    document.getElementById("demo2").innerHTML = obj.structure.dimensions.observation[4].values[0].name;
-    document.getElementById("demo3").innerHTML = obj.dataSets[0].observations.fred1[0];
-  }
+  
 }
 </script>
 </body>
