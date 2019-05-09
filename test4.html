@@ -28,7 +28,7 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 <script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 function loadDoc(fname) {
-  
+  var obj=""
   var testvar = fname.trim();
   url = "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/1+3+2.TT.1.SA2."+testvar+"/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016"
   var settings = { 
