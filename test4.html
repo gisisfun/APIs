@@ -44,19 +44,19 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
   
 function displaydata(jsontext,testvar)
  {
+    let newjsontext = jsontext
+    let obj = JSON.parse(newjsontext);
     if (testvar.length==0) {
-      let newjsontext = jsontext.replace("0:0:0:0:0:0", "persons0").replace( "0:0:0:0:1:0", "persons1").replace( "0:0:0:0:2:0", "persons2");
-      let obj = JSON.parse(newjsontext);
       let data0 = "";
       let data00 = obj.structure.dimensions.observation[4].values[0].id;
       let data01 = obj.structure.dimensions.observation[4].values[0].name;
-      let data02 = obj.dataSets[0].observations.persons0[0];
+      let data02 = obj.dataSets[0].observations["0:0:0:0:0:0"][0];
       let data10 = obj.structure.dimensions.observation[4].values[1].id;
       let data11 = obj.structure.dimensions.observation[4].values[1].name;
-      let data12 = obj.dataSets[0].observations.persons1[0];
+      let data12 = obj.dataSets[0].observations["0:0:0:0:1:0"][0];
       let data20 = obj.structure.dimensions.observation[4].values[2].id;
       let data21 = obj.structure.dimensions.observation[4].values[2].name;
-      let data22 = obj.dataSets[0].observations.persons2[0];
+      let data22 = obj.dataSets[0].observations["0:0:0:0:2:0"][0];
       csvlist = "SA2 Maincode 2016,SA2 Name 2016,Persons<br>" + data00 + "," + data01 +"," + data02 + "<br>" + data10 + "," +data11 + "," + data12 + "<br>" + data20 +"," + data21 + "," + data22 + "<br>"
      
       document.getElementById("demo0").innerHTML = csvlist;
@@ -72,12 +72,10 @@ function displaydata(jsontext,testvar)
     }
    else
     {
-      let newjsontext = jsontext.replace("0:0:0:0:0:0", "persons0");
-      let obj = JSON.parse(newjsontext);
       let data0 = "";
       let data00 = obj.structure.dimensions.observation[4].values[0].id;
       let data01 = obj.structure.dimensions.observation[4].values[0].name;
-      let data02 = obj.dataSets[0].observations.persons0[0];
+      let data02 = obj.dataSets[0].observations["0:0:0:0:0:0"][0];
       csvlist = "SA2 Maincode 2016,SA2 Name 2016,Persons<br>" + data00 + "," + data01 +"," + data02 + "<br>"
       document.getElementById("demo0").innerHTML = csvlist;
       document.getElementById("demo00").innerHTML = data00;
