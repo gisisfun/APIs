@@ -26,6 +26,9 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 <script>
   function errormsg() {
     document.getElementById("demo0").innerHTML = "Unknown Region Code";
+    tablevalues = "<table><tr><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Population</th></tr><tr><td></td><td></td><td></td></tr></table>"
+
+    document.getElementById("table0").innerHTML = tablevalues;
   }
   
 function displaydata(jsontext,testvar)
