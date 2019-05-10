@@ -21,7 +21,9 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 <INPUT Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
 <table>
   <tr><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Population</th></tr>
-  <tr><td id="demo1"></td><td id="demo2"></td><td id="demo3"></td></tr>
+  <tr><td id="demo00"></td><td id="demo01"></td><td id="demo02"></td></tr>
+  <tr><td id="demo10"></td><td id="demo11"></td><td id="demo12"></td></tr>
+  <tr><td id="demo20"></td><td id="demo21"></td><td id="demo22"></td></tr>
 </table>
 <p id="demo0"></p>
 
@@ -29,20 +31,43 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 <script>
   function errormsg() {
     document.getElementById("demo0").innerHTML = "Unknown Region Code";
-    document.getElementById("demo1").innerHTML = "";
-    document.getElementById("demo2").innerHTML = "";
-    document.getElementById("demo3").innerHTML = "";  
+    document.getElementById("demo00").innerHTML = "";
+    document.getElementById("demo01").innerHTML = "";
+    document.getElementById("demo02").innerHTML = "";  
+    document.getElementById("demo10").innerHTML = "";
+    document.getElementById("demo11").innerHTML = "";
+    document.getElementById("demo12").innerHTML = "";  
+    document.getElementById("demo20").innerHTML = "";
+    document.getElementById("demo21").innerHTML = "";
+    document.getElementById("demo22").innerHTML = "";  
   }
   
 function displaydata(jsontext,testvar)
  {
     let newjsontext = jsontext.replace("0:0:0:0:0:0", "fred1").replace( "1:0:0:0:0:0", "fred2").replace( "2:0:0:0:0:0", "fred3");
-    let obj = JSON.parse(newjsontext); 
+    let obj = JSON.parse(newjsontext);
+    let data0 = "";
+    let data00 = obj.structure.dimensions.observation[4].values[0].id;
+    let data01 = obj.structure.dimensions.observation[4].values[0].name;
+    let data02 = obj.dataSets[0].observations.persons0[0];
+    let data10 = obj.structure.dimensions.observation[4].values[1].id;
+    let data11 = obj.structure.dimensions.observation[4].values[1].name;
+    let data12 = obj.dataSets[0].observations.persons1[0];
+    let data20 = obj.structure.dimensions.observation[4].values[2].id;
+    let data21 = obj.structure.dimensions.observation[4].values[2].name;
+    let data22 = obj.dataSets[0].observations.persons2[0];
+    let csvlist = "SA2 Maincode 2016,SA2 Name 2016,Persons<br>"+data00,","+data01+","+data02+","<br>"+data10,","+data11+","+data12+","<br>"+data20,","+data21+","+data22+","<br>"
      
-    document.getElementById("demo0").innerHTML = "";
-    document.getElementById("demo1").innerHTML = testvar;
-    document.getElementById("demo2").innerHTML = obj.structure.dimensions.observation[4].values[0].name;
-    document.getElementById("demo3").innerHTML = obj.dataSets[0].observations.fred1[0];
+    document.getElementById("demo0").innerHTML = csvlist;
+    document.getElementById("demo00").innerHTML = data00;
+    document.getElementById("demo01").innerHTML = data01;
+    document.getElementById("demo02").innerHTML = data02;
+    document.getElementById("demo10").innerHTML = data10;
+    document.getElementById("demo11").innerHTML = data11;
+    document.getElementById("demo12").innerHTML = data12;
+    document.getElementById("demo20").innerHTML = data20;
+    document.getElementById("demo21").innerHTML = data21;
+    document.getElementById("demo22").innerHTML = data22;
 }
 
   function loadDoc(fname) {
