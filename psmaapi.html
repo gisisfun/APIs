@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<style>
+  h1 {font-family:arial, sanserif;}
+  h2 {font-family:arial, sanserif;}
+  body {font-family:arial, sanserif;}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse:collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+  }
+</style>
+<body>
+
+<h2>ABS SDMX-JSON Query</h2>
+<FORM Name="theForm">
+SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
+<INPUT Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
+<p id="table0"></p>
+<p id="demo0"></p>
+
+<script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  function errormsg() {
+    document.getElementById("demo0").innerHTML = "Unknown Region Code";
+    tablevalues = "<table><tr><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Population</th></tr><tr><td></td><td></td><td></td></tr></table>"
+
+    document.getElementById("table0").innerHTML = tablevalues;
+  }
+  
+function displayabsdata(jsontext,testvar)
+ {
+    let newjsontext = jsontext
+    let obj = JSON.parse(newjsontext);
+    let data0 = "";
+    csvlist = "SA2 Maincode 2016,SA2 Name 2016,Persons<br>"
+    tablelist = "<table><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Persons</th><tr>"
+    //
+    for (var i = 0; i < obj.structure.dimensions.observation[4].values.length; i++) {
+      let code = obj.structure.dimensions.observation[4].values[i].id;
+      let name = obj.structure.dimensions.observation[4].values[i].name;
+      key = "0:0:0:0:"+i+":0"
+      let value = obj.dataSets[0].observations[key][0];
+      csvlist = csvlist + code + "," + name +"," + value + "<br>"
+      tablelist = tablelist + "<tr><td>" + code + "</td><td>" + name +"</td><td>" + value + "</td><tr>"
+        
+    }   
+   tablelist = tablelist + "</table>"
+   document.getElementById("table0").innerHTML =tablelist;   
+   document.getElementById("demo0").innerHTML = csvlist;
+    }
+   
+}
+
+function displayabsdata(jsontext,testvar)
+ {
+    
+    
+   document.getElementById("table0").innerHTML ="";   
+   document.getElementById("demo0").innerHTML = jsontext;
+    }
+   
+}
+
+  function loadDoc(fname) {
+  
+    let testvar = fname.trim();
+    //url = "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/1+3+2.TT.1.SA2."+testvar+"/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016"
+    url = "https://linkd.in/gMDyMPw"
+    let settings = { 
+      "async": true, 
+      "crossDomain": true,
+      "url": url, 
+      "method": "GET", 
+      "headers": { 
+       
+       } 
+    } 
+  $.ajax(settings).done(function (response) { 
+    console.log(response); 
+    let textResponse= JSON.stringify(response);
+    dumpdata(textResponse,testvar);
+    displayabsdata(textResponse,testvar);
+    //return textResponse;
+  }); 
+
+  $.ajax(settings).error(function () {
+  errormsg();
+  });
+  
+}
+</script>
+</body>
+</html>
