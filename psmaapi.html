@@ -83,7 +83,7 @@ function dumpdata(jsontext,testvar)
   
     let testvar = fname.trim();
     //url = "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/1+3+2.TT.1.SA2."+testvar+"/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016"
-    url = "https://api.psma.com.au/beta/v1/addresses?addressString=1%20bowes%20st%20phillip%20act%202606&stateTerritory=ALL&datum=GDA94&page=1&perPage=10"
+    url = "https://api.psma.com.au/beta/v1/addresses?addressString="+encodeURI(testvar)+"stateTerritory=ALL&datum=GDA94&page=1&perPage=10"
     let settings = { 
       "async": true, 
       "crossDomain": true,
