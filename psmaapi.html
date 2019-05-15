@@ -15,7 +15,7 @@
 </style>
 <body>
 
-<h2>ABS SDMX-JSON Query</h2>
+<h2>PSMA Developer Query</h2>
 <FORM Name="theForm">
 SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
 <INPUT Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
@@ -27,7 +27,6 @@ SA2 Maincode 2016: <INPUT Type=Text Name="fname" value="101021008">
   function errormsg() {
     document.getElementById("demo0").innerHTML = "Unknown Region Code";
     tablevalues = "<table><tr><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Population</th></tr><tr><td></td><td></td><td></td></tr></table>"
-
     document.getElementById("table0").innerHTML = tablevalues;
   }
   
@@ -38,7 +37,7 @@ function displayabsdata(jsontext,testvar)
     let data0 = "";
     csvlist = "SA2 Maincode 2016,SA2 Name 2016,Persons<br>"
     tablelist = "<table><th>SA2 Maincode 2016</th><th>SA2 Name 2016</th><th>Persons</th><tr>"
-    //
+    
     for (var i = 0; i < obj.structure.dimensions.observation[4].values.length; i++) {
       let code = obj.structure.dimensions.observation[4].values[i].id;
       let name = obj.structure.dimensions.observation[4].values[i].name;
@@ -47,46 +46,60 @@ function displayabsdata(jsontext,testvar)
       csvlist = csvlist + code + "," + name +"," + value + "<br>"
       tablelist = tablelist + "<tr><td>" + code + "</td><td>" + name +"</td><td>" + value + "</td><tr>"
         
-    }   
+       }   
    tablelist = tablelist + "</table>"
    document.getElementById("table0").innerHTML =tablelist;   
    document.getElementById("demo0").innerHTML = csvlist;
-    }
-   
-}
+ }
 
-function displayabsdata(jsontext,testvar)
+function displaypsmadata(jsontext,testvar)
  {
+    let newjsontext = jsontext
+    let obj = JSON.parse(newjsontext);
+    let data0 = "";
+    csvlist = "addressId,Address,formattedAddress,matchConfidence<br>"
+    tablelist = "<table><th>addressId</th><th>addressString</th><th>formattedAddress</th><th>matchConfidence</th><tr>"
     
-    
+    for (var i = 0; i < obj.data.length; i++) {
+      let addressId = obj.data[i].addressId;
+      let addressString = obj.data[i].addressString;
+      let formattedAddress = obj.data[i].formattedAddress;
+      let matchConfidence = obj.data[i].matchConfidence
+      csvlist = csvlist + addressId + "," + addressString +","+ formattedAddress +"," + matchConfidence + "<br>"
+      tablelist = tablelist + "<tr><td>" + addressId + "</td><td>"+ addressString + "</td><td>" + formattedAddress +"</td><td>" + matchConfidence + "</td><tr>"
+        
+       }   
+   tablelist = tablelist + "</table>"
+   document.getElementById("table0").innerHTML =tablelist;   
+   document.getElementById("demo0").innerHTML = csvlist;
+ }
+
+function dumpdata(jsontext,testvar)
+ {
    document.getElementById("table0").innerHTML ="";   
    document.getElementById("demo0").innerHTML = jsontext;
-    }
-   
 }
-
   function loadDoc(fname) {
   
     let testvar = fname.trim();
     //url = "http://stat.data.abs.gov.au/sdmx-json/data/ABS_C16_T01_SA/1+3+2.TT.1.SA2."+testvar+"/all?detail=Full&dimensionAtObservation=AllDimensions&startPeriod=2016&endPeriod=2016"
-    url = "https://linkd.in/gMDyMPw"
+    url = "https://api.psma.com.au/beta/v1/addresses?addressString=1%20bowes%20st%20phillip%20act%202606&stateTerritory=ALL&datum=GDA94&page=1&perPage=10"
     let settings = { 
       "async": true, 
       "crossDomain": true,
       "url": url, 
       "method": "GET", 
       "headers": { 
-       
+         "authorization": "brAKupqRdkXNpkYRhy6SpPe1ErVJiAEc"
        } 
     } 
   $.ajax(settings).done(function (response) { 
     console.log(response); 
     let textResponse= JSON.stringify(response);
-    dumpdata(textResponse,testvar);
-    displayabsdata(textResponse,testvar);
+    //dumpdata(textResponse,testvar);
+    displaypsmadata(textResponse,testvar);
     //return textResponse;
   }); 
-
   $.ajax(settings).error(function () {
   errormsg();
   });
