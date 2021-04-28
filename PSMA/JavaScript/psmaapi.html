@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
 <style>
-  h1 {font-family:arial, sanserif;}
-  h2 {font-family:arial, sanserif;}
-  body {font-family:arial, sanserif;}
+  .container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: space-around;
+    align-items: center;
+  }
+
+  .items {
+    height: 30px;
+  }
+  div {
+    background-color: lightGray;
+  }
+  h1,h2,body,table {
+    font-family:arial, sanserif;
+  }
+  p,table {
+    background-color: white;
+  }
   table {
-    font-family: arial, sans-serif;
     border-collapse:collapse;
     width: 100%;
   }
@@ -14,13 +31,14 @@
   }
 </style>
 <body>
-
-<h2>PSMA Developer Query</h2>
-<FORM Name="theForm">
-Address: <INPUT Type=Text Name="fname" value="1 Bowes Pl, Phillip ACT 2606"  size="50">
-<INPUT Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
-<p id="table0"></p>
-<p id="demo0"></p>
+<div class="container">
+  <h2 class="items">PSMA Developer Query</h2>
+  <FORM Name="theForm">
+Address: <INPUT class="items" Type=Text Name="fname" value="1 Bowes Pl, Phillip ACT 2606"  size="50">
+<INPUT class="items" Type=Button Value="Action"  onClick='loadDoc(theForm.fname.value)'>
+<p class="ïtems" id="table0"></p>
+<p class="ïtems" id="demo0"></p>
+</div>
 
 <script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
@@ -76,7 +94,7 @@ function dumpdata(jsontext,testvar)
       "url": url, 
       "method": "GET", 
       "headers": { 
-         "authorization": "key
+         "authorization": "YOUR-KEY"
        } 
     } 
   $.ajax(settings).done(function (response) { 
